@@ -1,0 +1,21 @@
+#lang planet neil/sicp
+; 1.31 过程作为参数
+
+; 计算 a 到 b 的整数和
+(define (sum-integers a b)
+  (if (> a b)
+      0
+      (+ a (sum-integers (+ a 1) b))))
+
+; 计算给定范围内整数的立方和
+(define (sum-cubes a b)
+  (if (> a b)
+      0
+      (+ (cube a) (sum-cubes (+ a 1) b))))
+(define (cube a) (* a a a))
+
+; 计算序列和 （1/（1*3） + 1/（5*7） + 1/（9*11） + ...)
+(define (pi-sum a b)
+  (if (> a b)
+      0
+      (+ (/ 1.0 (* a (+ a 2))) (pi-sum (+ a 4) b))))
