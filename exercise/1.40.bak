@@ -1,0 +1,18 @@
+#lang planet neil/sicp
+; 牛顿法求不动点
+
+; 先求函数的导数,其中dx为很小的数
+; Dg(x) =  (g(x + dx)- g(x)) / dx
+
+(define (deriv g)
+  (define dx 0.00001)
+  (lambda (x)
+    (/ (- (g (+ x dx))
+          (g x))
+       dx)))
+
+; 牛顿法
+; f(x) = x - g(x)/Dg(x)
+
+(define (newton-transform g)
+  

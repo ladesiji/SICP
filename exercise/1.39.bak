@@ -1,0 +1,12 @@
+#lang planet neil/sicp
+; 迭代法求连分式
+
+(define (cont-frac n d k)
+  (define (cont-frac-i result i)
+    (if (= i 0)
+        result
+        (cont-frac-i (/ (n i)
+                        (- (d i) result))
+                     (- i 1))))
+  (cont-frac-i 0 1))
+
