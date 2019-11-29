@@ -131,6 +131,35 @@
                           (enumerate-interval 1 (- i 1))))
                    (enumerate-interval 1 n))))
 
-
 (define (flatmap proc sequence)
   (accumulate append nil (map proc sequence)))
+
+; 判断素数
+(define (prime? n)
+  (define (find-divisor test n)
+    (cond ((> (* test test) n) n)
+          ((= (remainder n test) 0) test)
+          (else
+           (find-divisor (next test) n))))
+  (define (next x)
+    (if (= x 2)
+        3
+        (+ x 2)))
+  (= (find-divisor 2 n) n))
+
+(define (prime-sum? pair)
+  (prime? (+ (car pair) (cadr pair))))
+
+(define (make-pair-sum pair)
+  (list (car pair) (cadr pair) (+ (car pair)(cadr pair))))
+
+(define (prime-sum-pairs n)
+  (map make-pair-sum
+       (filter prime-sum?
+               (flatmap
+                (lambda(i)
+                  (map (lambda(j)(list i j))
+                         (enumerate-interval 1 (- i 1))))
+                (enumerate-interval 1 n)))))
+
+                         
