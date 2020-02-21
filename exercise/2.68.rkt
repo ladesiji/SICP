@@ -103,5 +103,6 @@
 
 (define a (decode sample-message sample-tree))
 (display a)
-       
-       
+(define b (encode (list 'A 'D 'A 'B 'B 'C 'A) sample-tree))
+(newline)
+(display b)
