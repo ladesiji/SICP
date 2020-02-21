@@ -98,3 +98,47 @@ Huffman 树的表示
 (display sample-tree)
 (newline)
 (display (decode sample-message sample-tree))
+
+
+; encode 过程
+
+(define (encode message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
+
+(define (encode-symbol symbol tree)
+  (cond ((leaf? tree) '())
+        ((symbol-in-set? symbol (symbols (left-branch tree)))
+         (cons 0
+               (encode-symbol symbol (left-branch tree))))
+        ((symbol-in-set? symbol (symbols (right-branch tree)))
+         (cons 1
+               (encode-symbol symbol (right-branch tree))))
+        (else (error "This symbol not in tree" symbol))))
+
+(define (symbol-in-set? symbol set)
+  (cond ((null? set) false)
+        ((eq? symbol (car set)) true)
+        (else (symbol-in-set? symbol (cdr set)))))
+
+(define msg '(a b c d))
+(newline)
+(display (encode msg sample-tree))
+
+; 生成Huffman 树
+
+(define (generate-huffman-tree pairs)
+  (sucessive-merge (make-leaf-set pairs)))
+
+(define (sucessive-merge ordered)
+  (cond ((= 0 (length ordered)) '())
+        ((= 1 (length ordered)) (car ordered))
+        (else
+         (let ((sub-tree (make-code-tree (car ordered)
+                                         (cadr ordered)))
+               (remained-ordered (cddr ordered)))
+           (sucessive-merge (adjoin-set sub-tree remained-ordered))))))
+(newline)
+(display (sucessive-merge leaf-set-a))
