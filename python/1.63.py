@@ -16,8 +16,8 @@ def average(x, y):
 def near(x, f, g):
     return approx_eq(f(x),g(x))
 
-def approx_eq(x, y, tollance=1e-6):
-    return abs(x-y) < tollance
+def approx_eq(x, y, tolerance=1e-6):
+    return abs(x-y) < tolerance 
 
 def square_root(x):
     def update(guess):
